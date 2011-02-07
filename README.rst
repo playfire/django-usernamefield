@@ -1,4 +1,0 @@
-django-usernamefield
-====================
-
-FIXME
