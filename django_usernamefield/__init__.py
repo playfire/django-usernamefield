@@ -38,8 +38,13 @@ class UsernameField(models.CharField):
     def pre_save(self, obj, add):
         if getattr(obj, self.name) == '':
             try:
-                username = getattr(obj, self.populate_from).username
-                setattr(obj, self.name, username[:self.max_length])
+                user = getattr(obj, self.populate_from)
+
+                # Support nullable fields.
+                if user is None:
+                    setattr(obj, self.name, '')
+                else:
+                    setattr(obj, self.name, user.username[:self.max_length])
             except ObjectDoesNotExist:
                 pass
 
