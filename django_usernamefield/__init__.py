@@ -58,6 +58,11 @@ class UsernameField(models.CharField):
 
         super(UsernameField, self).contribute_to_class(cls, name)
 
+    def south_field_triple(self):
+        from south.modelsinspector import introspector
+        args, kwargs = introspector(self)
+        return ('django.db.models.fields.TextField', args, kwargs)
+
     @classmethod
     def rename_username(cls, user_id, username):
         """
